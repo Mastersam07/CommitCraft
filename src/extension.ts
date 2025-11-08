@@ -1,26 +1,233 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { CommitMessageGenerator } from './commitMessageGenerator';
+import { GitService } from './gitService';
 
-// This method is called when your extension is activated
-// Your extension is activated the very first time the command is executed
+let outputChannel: vscode.OutputChannel;
+
 export function activate(context: vscode.ExtensionContext) {
+    // Create output channel for debugging
+    outputChannel = vscode.window.createOutputChannel('CommitCraft');
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "commitcraft" is now active!');
+    console.log('CommitCraft is now active!');
+    outputChannel.appendLine('CommitCraft activated');
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	const disposable = vscode.commands.registerCommand('commitcraft.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from CommitCraft!');
-	});
+    // Initialize services
+    const gitService = new GitService();
+    const generator = new CommitMessageGenerator(outputChannel);
 
-	context.subscriptions.push(disposable);
+    // Register commands
+    const generateCommand = vscode.commands.registerCommand(
+        'commitcraft.generateMessage',
+        async () => {
+            await generateCommitMessage(gitService, generator, false);
+        }
+    );
+
+    const generateWithExplanationCommand = vscode.commands.registerCommand(
+        'commitcraft.generateWithExplanation',
+        async () => {
+            await generateCommitMessage(gitService, generator, true);
+        }
+    );
+
+    // Add status bar item
+    const statusBarItem = vscode.window.createStatusBarItem(
+        vscode.StatusBarAlignment.Left,
+        100
+    );
+    statusBarItem.text = "$(sparkle) CommitCraft";
+    statusBarItem.tooltip = "Generate commit message (Ctrl+Shift+G)";
+    statusBarItem.command = 'commitcraft.generateMessage';
+    statusBarItem.show();
+
+    context.subscriptions.push(
+        generateCommand,
+        generateWithExplanationCommand,
+        statusBarItem,
+        outputChannel
+    );
+
+    // Show welcome message on first install
+    const hasShownWelcome = context.globalState.get('commitcraft.welcomeShown');
+    if (!hasShownWelcome) {
+        showWelcomeMessage(context);
+    }
 }
 
-// This method is called when your extension is deactivated
-export function deactivate() {}
+async function generateCommitMessage(
+    gitService: GitService,
+    generator: CommitMessageGenerator,
+    showExplanation: boolean
+) {
+    try {
+        // Check for API key
+        const config = vscode.workspace.getConfiguration('commitcraft');
+        const apiKey = config.get<string>('geminiApiKey');
+
+        if (!apiKey) {
+            const result = await vscode.window.showErrorMessage(
+                'Gemini API key not configured. Get a free key at Google AI Studio.',
+                'Open Settings',
+                'Get API Key'
+            );
+            if (result === 'Open Settings') {
+                vscode.commands.executeCommand('workbench.action.openSettings', 'commitcraft.geminiApiKey');
+            } else if (result === 'Get API Key') {
+                vscode.env.openExternal(vscode.Uri.parse('https://makersuite.google.com/app/apikey'));
+            }
+            return;
+        }
+
+        // Get workspace folder
+        const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+        if (!workspaceFolder) {
+            vscode.window.showErrorMessage('No workspace folder open');
+            return;
+        }
+
+        // Show progress
+        await vscode.window.withProgress(
+            {
+                location: vscode.ProgressLocation.Notification,
+                title: 'CommitCraft',
+                cancellable: true
+            },
+            async (progress, token) => {
+                progress.report({ increment: 20, message: 'Analyzing changes...' });
+
+                // Get git diff
+                const diff = await gitService.getStagedDiff(workspaceFolder.uri.fsPath);
+
+                if (!diff) {
+                    vscode.window.showInformationMessage('No staged changes found. Stage your changes with `git add` first.');
+                    return;
+                }
+
+                if (token.isCancellationRequested) {
+                    return;
+                }
+
+                // Get context
+                progress.report({ increment: 20, message: 'Learning from commit history...' });
+                const recentCommits = await gitService.getRecentCommits(workspaceFolder.uri.fsPath, 10);
+
+                progress.report({ increment: 20, message: 'Analyzing file context...' });
+                const fileContext = await gitService.getFileContext(workspaceFolder.uri.fsPath);
+                const branchInfo = await gitService.getBranchInfo(workspaceFolder.uri.fsPath);
+
+                if (token.isCancellationRequested) {
+                    return;
+                }
+
+                progress.report({ increment: 20, message: 'Generating commit message...' });
+
+                // Generate messages
+                const result = await generator.generateMessage(
+                    diff,
+                    recentCommits,
+                    fileContext,
+                    branchInfo,
+                    apiKey
+                );
+
+                progress.report({ increment: 20, message: 'Done!' });
+
+                if (showExplanation) {
+                    // Show with explanation
+                    const items = result.suggestions.map(s => ({
+                        label: s.message,
+                        description: `$(${getStyleIcon(s.style)}) ${s.style}`,
+                        detail: `💡 ${s.reasoning}`,
+                        suggestion: s
+                    }));
+
+                    const picked = await vscode.window.showQuickPick(items, {
+                        placeHolder: 'Select a commit message',
+                        matchOnDetail: true
+                    });
+
+                    if (picked) {
+                        await applyCommitMessage(picked.suggestion.message);
+                    }
+                } else {
+                    // Quick mode
+                    const picked = await vscode.window.showQuickPick(
+                        result.suggestions.map(s => ({
+                            label: s.message,
+                            description: `$(${getStyleIcon(s.style)}) ${s.style}`
+                        })),
+                        {
+                            placeHolder: 'Select a commit message'
+                        }
+                    );
+
+                    if (picked) {
+                        await applyCommitMessage(picked.label);
+                    }
+                }
+            }
+        );
+    } catch (error) {
+        outputChannel.appendLine(`Error: ${error}`);
+        console.error('Error generating commit message:', error);
+        vscode.window.showErrorMessage(`Failed to generate commit message: ${error instanceof Error ? error.message : String(error)}`);
+    }
+}
+
+function getStyleIcon(style: string): string {
+    switch (style) {
+        case 'brief': return 'dash';
+        case 'standard': return 'check';
+        case 'detailed': return 'checklist';
+        default: return 'circle';
+    }
+}
+
+async function applyCommitMessage(message: string) {
+    const gitExtension = vscode.extensions.getExtension('vscode.git')?.exports;
+    const api = gitExtension?.getAPI(1);
+
+    if (api && api.repositories.length > 0) {
+        const repo = api.repositories[0];
+        repo.inputBox.value = message;
+
+        await vscode.commands.executeCommand('workbench.view.scm');
+
+        vscode.window.showInformationMessage(
+            'Commit message applied! Review and commit when ready.',
+            'Commit Now'
+        ).then(selection => {
+            if (selection === 'Commit Now') {
+                vscode.commands.executeCommand('git.commit');
+            }
+        });
+    } else {
+        await vscode.env.clipboard.writeText(message);
+        vscode.window.showInformationMessage('Commit message copied to clipboard!');
+    }
+}
+
+function showWelcomeMessage(context: vscode.ExtensionContext) {
+    vscode.window.showInformationMessage(
+        'Welcome to CommitCraft! Generate your first AI-powered commit message with Ctrl+Shift+G',
+        'Open Settings',
+        'Get API Key',
+        'View Guide'
+    ).then(selection => {
+        if (selection === 'Open Settings') {
+            vscode.commands.executeCommand('workbench.action.openSettings', 'commitcraft');
+        } else if (selection === 'Get API Key') {
+            vscode.env.openExternal(vscode.Uri.parse('https://makersuite.google.com/app/apikey'));
+        } else if (selection === 'View Guide') {
+            vscode.env.openExternal(vscode.Uri.parse('https://github.com/yourusername/commitcraft#readme'));
+        }
+    });
+
+    context.globalState.update('commitcraft.welcomeShown', true);
+}
+
+export function deactivate() {
+    if (outputChannel) {
+        outputChannel.dispose();
+    }
+}
