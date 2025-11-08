@@ -35,7 +35,7 @@ export class CommitMessageGenerator {
         const config = vscode.workspace.getConfiguration('commitcraft');
         const useConventional = config.get<boolean>('conventionalCommits', true);
         const includeEmoji = config.get<boolean>('includeEmoji', false);
-        const modelName = config.get<string>('model', 'gemini-1.5-flash-latest');
+        const modelName = config.get<string>('model', 'gemini-2.0-flash');
 
         // Initialize the client with API key
         const client = new GoogleGenAI({ apiKey: apiKey });
