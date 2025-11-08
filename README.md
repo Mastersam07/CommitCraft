@@ -1,4 +1,4 @@
-# CommitCraft - AI-Powered Commit Messages
+# CommitCraft - Gemini Powered Commit Messages
 
 Generate meaningful commit messages that actually explain what your code does, powered by Google's Gemini AI.
 
