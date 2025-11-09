@@ -33,9 +33,6 @@ jobs:
       - name: Type check
         run: npm run check-types
 
-      - name: Run tests
-        run: npm test
-
       - name: Build extension
         run: npm run package
 

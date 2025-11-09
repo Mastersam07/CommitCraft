@@ -19,3 +19,4 @@ vsc-extension-quickstart.md
 RELEASE.md
 .git/**
 .gitattributes
+dist/meta.json
