@@ -8,6 +8,8 @@
 
 Generate meaningful commit messages that actually explain what your code does, powered by Google's Gemini AI.
 
+Rub the lamp, get perfect commits.
+
 ## ✨ Features
 
 ### Core Features
