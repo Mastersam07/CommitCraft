@@ -4,6 +4,7 @@
   "description": "Your AI-powered commit message genie - rub the lamp, get perfect commits!",
   "version": "0.0.1",
   "publisher": "mastersam",
+  "icon": "icon.png",
   "author": {
     "name": "Samuel Abada",
     "url": "https://github.com/mastersam07"
@@ -49,14 +50,25 @@
       {
         "command": "gitgenie.generateMessage",
         "title": "Generate Commit Message",
-        "category": "GitGenie"
+        "category": "GitGenie",
+        "icon": "$(sparkle)"
       },
       {
         "command": "gitgenie.generateWithExplanation",
         "title": "Generate Commit Message with Explanation",
-        "category": "GitGenie"
+        "category": "GitGenie",
+        "icon": "$(info)"
       }
     ],
+    "menus": {
+      "scm/title": [
+        {
+          "command": "gitgenie.generateMessage",
+          "group": "navigation",
+          "when": "scmProvider == git"
+        }
+      ]
+    },
     "keybindings": [
       {
         "command": "gitgenie.generateMessage",

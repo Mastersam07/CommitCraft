@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+@keyframes rub {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(15px); }
+  75% { transform: translateX(-15px); }
+}
+
+@keyframes emerge {
+  0% { 
+    transform: translateY(50px) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+.container {
+  width: 256px;
+  height: 256px;
+  background: linear-gradient(135deg, #0D1117 0%, #161B22 100%);
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.container:hover .lamp {
+  animation: rub 0.5s ease-in-out;
+}
+
+.container:hover .wish {
+  animation: emerge 1s ease-out forwards;
+}
+
+.container:hover .sparkle {
+  display: block;
+}
+
+.lamp {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+}
+
+.wish {
+  position: absolute;
+  opacity: 0;
+  text-align: center;
+  animation: float 3s ease-in-out infinite;
+}
+
+.wish1 {
+  left: 20px;
+  top: 40px;
+  animation-delay: 0.2s;
+}
+
+.wish2 {
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  animation-delay: 0.4s;
+}
+
+.wish3 {
+  right: 20px;
+  top: 40px;
+  animation-delay: 0.6s;
+}
+
+.wish-icon {
+  font-size: 32px;
+  margin-bottom: 5px;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+
+.wish-text {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 11px;
+  color: #E0AAFF;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(157, 78, 221, 0.8);
+}
+
+.title {
+  position: absolute;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Arial Black', sans-serif;
+  font-size: 26px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.tagline {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 11px;
+  color: #8B949E;
+  white-space: nowrap;
+}
+
+.shortcut {
+  position: absolute;
+  bottom: 58px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(48, 54, 61, 0.9);
+  border: 1px solid #484F58;
+  border-radius: 4px;
+  padding: 3px 10px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 11px;
+  color: #58A6FF;
+  backdrop-filter: blur(10px);
+}
+
+.sparkle {
+  display: none;
+  position: absolute;
+  animation: sparkle 1s ease-out infinite;
+}
+
+.sparkle1 {
+  left: 30px;
+  top: 60px;
+  animation-delay: 0.8s;
+}
+
+.sparkle2 {
+  right: 30px;
+  top: 50px;
+  animation-delay: 1.2s;
+}
+
+.sparkle3 {
+  left: 50%;
+  top: 100px;
+  animation-delay: 1.6s;
+}
+
+.git-branch {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-family: 'Consolas', monospace;
+  font-size: 10px;
+  color: #F05032;
+  opacity: 0.3;
+}
+
+.commit-preview {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #30363D;
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-family: 'Consolas', monospace;
+  font-size: 9px;
+  color: #7EE787;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.container:hover .commit-preview {
+  opacity: 1;
+  animation: typing 2s steps(30, end) 1s forwards;
+  overflow: hidden;
+  width: 0;
+}
+
+.magic-smoke {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.container:hover .magic-smoke {
+  opacity: 0.3;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Git branch indicator -->
+  <div class="git-branch">🔀 main</div>
+  
+  <!-- Magic smoke effect -->
+  <div class="magic-smoke">
+    <svg width="256" height="256">
+      <defs>
+        <radialGradient id="smoke">
+          <stop offset="0%" style="stop-color:#9D4EDD;stop-opacity:0.5"/>
+          <stop offset="100%" style="stop-color:#240046;stop-opacity:0"/>
+        </radialGradient>
+      </defs>
+      <ellipse cx="128" cy="140" rx="80" ry="60" fill="url(#smoke)">
+        <animate attributeName="rx" values="60;100;60" dur="4s" repeatCount="indefinite"/>
+        <animate attributeName="ry" values="40;80;40" dur="4s" repeatCount="indefinite"/>
+      </ellipse>
+    </svg>
+  </div>
+  
+  <!-- The Lamp -->
+  <div class="lamp">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <defs>
+        <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#FFF8DC"/>
+          <stop offset="50%" style="stop-color:#FFD700"/>
+          <stop offset="100%" style="stop-color:#B8860B"/>
+        </linearGradient>
+      </defs>
+      
+      <!-- Lamp body -->
+      <path d="M 20 40 C 18 42, 17 46, 22 55 L 58 55 C 63 46, 62 42, 60 40 C 59 36, 55 32, 50 30 L 47 22 C 47 20, 43 18, 40 18 C 37 18, 33 20, 33 22 L 30 30 C 25 32, 21 36, 20 40 Z" 
+            fill="url(#gold)" 
+            stroke="#B8860B" 
+            stroke-width="2"/>
+      
+      <!-- Lamp lid -->
+      <ellipse cx="40" cy="22" rx="8" ry="3" fill="#FFD700" stroke="#B8860B"/>
+      <circle cx="40" cy="22" r="2" fill="#9D4EDD">
+        <animate attributeName="fill" values="#9D4EDD;#00D4FF;#FFD700;#9D4EDD" dur="3s" repeatCount="indefinite"/>
+      </circle>
+      
+      <!-- Spout -->
+      <path d="M 47 22 Q 55 20, 58 26 Q 60 30, 56 35" fill="url(#gold)" stroke="#B8860B" stroke-width="1.5"/>
+      
+      <!-- Handle -->
+      <path d="M 33 30 Q 24 32, 22 38 Q 20 42, 24 46" fill="none" stroke="#B8860B" stroke-width="2" stroke-linecap="round"/>
+      
+      <!-- Base -->
+      <ellipse cx="40" cy="55" rx="20" ry="6" fill="#8B4513"/>
+    </svg>
+  </div>
+  
+  <!-- Three Wishes -->
+  <div class="wish wish1">
+    <div class="wish-icon">🧠</div>
+    <div class="wish-text">AI Understands<br>Your Code</div>
+  </div>
+  
+  <div class="wish wish2">
+    <div class="wish-icon">✨</div>
+    <div class="wish-text">Perfect<br>Commits</div>
+  </div>
+  
+  <div class="wish wish3">
+    <div class="wish-icon">💡</div>
+    <div class="wish-text">Explains<br>WHY</div>
+  </div>
+  
+  <!-- Sparkles -->
+  <div class="sparkle sparkle1">✨</div>
+  <div class="sparkle sparkle2">⭐</div>
+  <div class="sparkle sparkle3">✨</div>
+  
+  <!-- Commit preview (appears on hover) -->
+  <div class="commit-preview">feat: add payment validation ✓</div>
+  
+  <!-- Title -->
+  <div class="title">GitGenie</div>
+  
+  <!-- Tagline -->
+  <div class="tagline">Rub the lamp, get perfect commits</div>
+  
+  <!-- Keyboard shortcut -->
+  <div class="shortcut">Ctrl+Shift+G</div>
+</div>
+
+<script>
+// Add interactive sound effect (optional)
+document.querySelector('.container').addEventListener('mouseenter', () => {
+  // You could play a magical sound here
+  console.log('✨ Your 3 wishes are granted! ✨');
+});
+</script>
+</body>
+</html>

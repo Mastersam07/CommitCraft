@@ -4,6 +4,7 @@
 out/**
 node_modules/**
 src/**
+images/**
 .gitignore
 .yarnrc
 esbuild.js

@@ -1,21 +1,29 @@
+<div align="center">
+
+![GitGenie Logo](images/gitgenie-icon-simple.svg)
+
 # GitGenie - AI-Powered Commit Messages
+
+**Rub the lamp, get perfect commits ✨**
 
 [![Version](https://img.shields.io/visual-studio-marketplace/v/mastersam.gitgenie?style=flat-square&label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=mastersam.gitgenie)
 [![Installs](https://img.shields.io/visual-studio-marketplace/i/mastersam.gitgenie?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.gitgenie)
 [![Rating](https://img.shields.io/visual-studio-marketplace/r/mastersam.gitgenie?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.gitgenie)
-[![CI](https://img.shields.io/github/actions/workflow/status/mastersam07/gitgenie/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/mastersam07/gitgenie/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/mastersam07/gitgenie/ci.yml?style=flat-square&label=CI)](https://github.com/mastersam07/gitgenie/actions)
 [![License](https://img.shields.io/github/license/mastersam07/gitgenie?style=flat-square)](LICENSE)
 
 Generate meaningful commit messages that actually explain what your code does, powered by Google's Gemini AI.
 
-Rub the lamp, get perfect commits.
+</div>
 
 ## ✨ Features
 
 ### Core Features
+- **✨ One-Click Generation** - Click the sparkle icon in Source Control for instant commit messages
 - **🤖 Smart Commit Messages** - Understands your code changes, not just file names
 - **📝 Multiple Styles** - Choose from brief, standard, or detailed messages
 - **🎯 Conventional Commits** - Automatically follows conventional commit format
+- **⌨️ Multiple Access Methods** - Icon button, keyboard shortcut, or command palette
 - **💡 Explanation Mode** - Learn why the message was generated
 - **📊 Confidence Scoring** - Know when to review carefully
 - **🎨 Context Aware** - Detects frameworks, languages, and patterns
@@ -56,21 +64,37 @@ code --install-extension mastersam.gitgenie
    - Search for "GitGenie"
    - Paste your API key
 
-3. **Start Using**
-   - Stage your changes
-   - Press `Ctrl+Shift+G` (Windows/Linux) or `Cmd+Shift+G` (Mac)
-   - Select your preferred message
-   - Commit!
+3. **Start Using** (3 ways to generate commit messages)
+   - **Click the ✨ icon** in the Source Control panel (next to commit message box)
+   - **Keyboard shortcut**: Press `Ctrl+Shift+G` (Windows/Linux) or `Cmd+Shift+G` (Mac)
+   - **Command Palette**: `Ctrl+Shift+P` → "GitGenie: Generate Commit Message"
 
 ## 📖 Usage
 
-### Basic Generation
+### Basic Generation (3 Methods)
+
+**Method 1: Icon Button (Recommended)**
 ```
 1. Make your code changes
 2. Stage files (git add)
-3. Press Ctrl+Shift+G
-4. Pick from 3 suggestions
-5. Message is applied to commit box
+3. Open Source Control panel (Ctrl+Shift+G on Windows/Linux, Cmd+Shift+G on Mac)
+4. Click the ✨ sparkle icon in the toolbar
+5. Pick from 3 AI-generated suggestions
+6. Message is applied to commit box
+```
+
+**Method 2: Keyboard Shortcut**
+```
+1. Stage your changes
+2. Press Ctrl+Shift+G (or Cmd+Shift+G on Mac)
+3. Select your preferred message
+```
+
+**Method 3: Command Palette**
+```
+1. Press Ctrl+Shift+P (Cmd+Shift+P on Mac)
+2. Type "GitGenie: Generate Commit Message"
+3. Press Enter
 ```
 
 ### With Explanation

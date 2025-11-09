@@ -1,0 +1,221 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Golden gradient for lamp -->
+    <linearGradient id="goldLamp" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFF8DC;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#FFD700;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#FFA500;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Magic gradient for wishes -->
+    <radialGradient id="wishGlow">
+      <stop offset="0%" style="stop-color:#9D4EDD;stop-opacity:1">
+        <animate attributeName="stop-color" values="#9D4EDD;#00D4FF;#FFD700;#9D4EDD" dur="6s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" style="stop-color:#240046;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- Git gradient -->
+    <linearGradient id="gitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F05032;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#E44D26;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Glow filter -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    
+    <!-- Hand/rub motion blur -->
+    <filter id="motionBlur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2,0">
+        <animate attributeName="stdDeviation" values="0,0;3,0;0,0" dur="2s" repeatCount="indefinite"/>
+      </feGaussianBlur>
+    </filter>
+  </defs>
+  
+  <!-- Dark background with code pattern -->
+  <rect width="256" height="256" fill="#0D1117"/>
+  
+  <!-- Subtle code lines in background -->
+  <g opacity="0.1" font-family="monospace" font-size="10" fill="#30363D">
+    <text x="10" y="20">git commit -m "</text>
+    <text x="10" y="35">fix: validate payment</text>
+    <text x="10" y="50">feat: add user auth</text>
+    <text x="10" y="240">git log --oneline</text>
+  </g>
+  
+  <!-- The Golden Lamp (centered and prominent) -->
+  <g transform="translate(128, 140)">
+    <!-- Lamp shadow -->
+    <ellipse cx="0" cy="40" rx="45" ry="15" fill="#000" opacity="0.3"/>
+    
+    <!-- Main lamp body -->
+    <path d="M -35 0 
+             C -40 5, -42 15, -30 35
+             L 30 35
+             C 42 15, 40 5, 35 0
+             C 34 -8, 28 -15, 20 -18
+             L 15 -28
+             C 15 -32, 8 -35, 0 -35
+             C -8 -35, -15 -32, -15 -28
+             L -20 -18
+             C -28 -15, -34 -8, -35 0 Z" 
+          fill="url(#goldLamp)" 
+          stroke="#B8860B" 
+          stroke-width="2"
+          filter="url(#glow)">
+      <!-- Subtle pulsing to show it's magical -->
+      <animateTransform attributeName="transform" type="scale" 
+                        values="1,1;1.02,1.02;1,1" dur="4s" repeatCount="indefinite"/>
+    </path>
+    
+    <!-- Lamp lid with jewel -->
+    <ellipse cx="0" cy="-28" rx="12" ry="5" fill="#FFD700" stroke="#B8860B" stroke-width="2"/>
+    <circle cx="0" cy="-28" r="3" fill="#9D4EDD" filter="url(#glow)">
+      <animate attributeName="fill" values="#9D4EDD;#00D4FF;#9D4EDD" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Spout -->
+    <path d="M 15 -28 Q 30 -30, 35 -20 Q 38 -12, 32 -5" 
+          fill="url(#goldLamp)" 
+          stroke="#B8860B" 
+          stroke-width="2"/>
+    
+    <!-- Handle -->
+    <path d="M -15 -18 Q -28 -15, -30 -5 Q -32 3, -28 10" 
+          fill="none" 
+          stroke="#B8860B" 
+          stroke-width="3" 
+          stroke-linecap="round"/>
+    
+    <!-- Base -->
+    <ellipse cx="0" cy="35" rx="25" ry="8" fill="#8B4513"/>
+    <ellipse cx="0" cy="33" rx="23" ry="7" fill="#A0522D"/>
+  </g>
+  
+  <!-- Rubbing Hand Animation (appears periodically) -->
+  <g opacity="0" transform="translate(100, 140)">
+    <path d="M 0 0 Q 10 -5, 20 0 Q 25 5, 20 10 L 15 12 L 10 10 L 5 12 L 0 10 Q -5 5, 0 0"
+          fill="#FDBCB4" stroke="#8B7355" stroke-width="1" filter="url(#motionBlur)">
+      <animateTransform attributeName="transform" type="translate" 
+                        values="0,0;30,0;0,0" dur="0.5s" begin="0s;6s" />
+    </path>
+    <animate attributeName="opacity" values="0;0.8;0.8;0" dur="2s" begin="0s;6s" />
+  </g>
+  
+  <!-- "RUB" text hint (appears with hand) -->
+  <text x="128" y="160" text-anchor="middle" font-family="Arial Black" font-size="14" 
+        fill="#FFD700" opacity="0" filter="url(#glow)">
+    RUB
+    <animate attributeName="opacity" values="0;1;1;0" dur="2s" begin="0s;6s" />
+  </text>
+  
+  <!-- THREE WISHES emerging from lamp (staggered animation) -->
+  
+  <!-- Wish 1: AI Understanding (Brain/Code icon) -->
+  <g opacity="0">
+    <circle cx="70" cy="60" r="20" fill="url(#wishGlow)" filter="url(#glow)"/>
+    <text x="70" y="65" text-anchor="middle" font-size="24">🧠</text>
+    <text x="70" y="90" text-anchor="middle" font-family="Arial" font-size="10" fill="#E0AAFF">
+      AI Understands
+    </text>
+    <text x="70" y="102" text-anchor="middle" font-family="Arial" font-size="10" fill="#E0AAFF">
+      Your Code
+    </text>
+    <animate attributeName="opacity" values="0;0;1" dur="3s" begin="1s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="translate" 
+                      values="58,80;0,0" dur="1.5s" begin="1s" fill="freeze"/>
+  </g>
+  
+  <!-- Wish 2: Perfect Commits (Git icon) -->
+  <g opacity="0">
+    <circle cx="128" cy="50" r="20" fill="url(#wishGlow)" filter="url(#glow)"/>
+    <text x="128" y="55" text-anchor="middle" font-size="24">✨</text>
+    <text x="128" y="80" text-anchor="middle" font-family="Arial" font-size="10" fill="#E0AAFF">
+      Perfect
+    </text>
+    <text x="128" y="92" text-anchor="middle" font-family="Arial" font-size="10" fill="#E0AAFF">
+      Commits
+    </text>
+    <animate attributeName="opacity" values="0;0;1" dur="3s" begin="1.5s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="translate" 
+                      values="0,80;0,0" dur="1.5s" begin="1.5s" fill="freeze"/>
+  </g>
+  
+  <!-- Wish 3: Learning/Teaching (Lightbulb) -->
+  <g opacity="0">
+    <circle cx="186" cy="60" r="20" fill="url(#wishGlow)" filter="url(#glow)"/>
+    <text x="186" y="65" text-anchor="middle" font-size="24">💡</text>
+    <text x="186" y="90" text-anchor="middle" font-family="Arial" font-size="10" fill="#E0AAFF">
+      Explains
+    </text>
+    <text x="186" y="102" text-anchor="middle" font-family="Arial" font-size="10" fill="#E0AAFF">
+      WHY
+    </text>
+    <animate attributeName="opacity" values="0;0;1" dur="3s" begin="2s" fill="freeze"/>
+    <animateTransform attributeName="transform" type="translate" 
+                      values="-58,80;0,0" dur="1.5s" begin="2s" fill="freeze"/>
+  </g>
+  
+  <!-- Magic smoke connecting wishes -->
+  <g opacity="0.6">
+    <path d="M 128 112 Q 70 80, 70 60" stroke="url(#wishGlow)" stroke-width="2" fill="none" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.6" dur="1.5s" begin="1s" fill="freeze"/>
+    </path>
+    <path d="M 128 112 Q 128 80, 128 50" stroke="url(#wishGlow)" stroke-width="2" fill="none" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.6" dur="1.5s" begin="1.5s" fill="freeze"/>
+    </path>
+    <path d="M 128 112 Q 186 80, 186 60" stroke="url(#wishGlow)" stroke-width="2" fill="none" opacity="0">
+      <animate attributeName="opacity" values="0;0;0.6" dur="1.5s" begin="2s" fill="freeze"/>
+    </path>
+  </g>
+  
+  <!-- Sparkles around wishes (appear after wishes manifest) -->
+  <g opacity="0">
+    <circle cx="50" cy="50" r="2" fill="#FFD700">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="206" cy="50" r="2" fill="#FFD700">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="3.5s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="128" cy="30" r="2" fill="#FFD700">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" begin="4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+  
+  <!-- GitGenie text at bottom -->
+  <text x="128" y="220" text-anchor="middle" font-family="Arial Black" font-size="24" fill="url(#goldLamp)" filter="url(#glow)">
+    GitGenie
+  </text>
+  
+  <!-- Tagline -->
+  <text x="128" y="238" text-anchor="middle" font-family="Arial" font-size="12" fill="#9CA3AF">
+    Rub the lamp, get perfect commits
+  </text>
+  
+  <!-- Keyboard shortcut hint -->
+  <g transform="translate(128, 195)">
+    <rect x="-45" y="-10" width="90" height="18" rx="3" fill="#30363D" stroke="#484F58" stroke-width="1" opacity="0.8"/>
+    <text x="0" y="2" text-anchor="middle" font-family="monospace" font-size="10" fill="#E0AAFF">
+      Ctrl+Shift+G
+    </text>
+  </g>
+  
+  <!-- Pulsing circle to draw attention to lamp -->
+  <circle cx="128" cy="140" r="60" fill="none" stroke="url(#wishGlow)" stroke-width="2" opacity="0">
+    <animate attributeName="r" values="40;70;40" dur="6s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0;0.3;0" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  
+  <!-- Small Git logo integration -->
+  <g transform="translate(200, 200)">
+    <circle cx="0" cy="0" r="12" fill="#F05032" opacity="0.8"/>
+    <path d="M -6 0 L -2 0 L -2 -4 L 2 -4 L 2 0 L 6 0 L 0 6 Z" fill="#FFF" transform="rotate(45)"/>
+  </g>
+</svg>
