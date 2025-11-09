@@ -1,6 +1,10 @@
 <div align="center">
 
-![GitGenie Logo](images/gitgenie-icon-simple.svg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="images/gitgenie-icon-simple.svg">
+  <source media="(prefers-color-scheme: light)" srcset="images/gitgenie-icon-simple.svg">
+  <img src="images/icon.png" alt="GitGenie Logo" width="400">
+</picture>
 
 # GitGenie - AI-Powered Commit Messages
 
