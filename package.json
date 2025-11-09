@@ -67,13 +67,6 @@
           "group": "navigation",
           "when": "scmProvider == git"
         }
-      ],
-      "scm/inputBox": [
-        {
-          "command": "gitgenie.generateMessage",
-          "group": "navigation",
-          "when": "scmProvider == git"
-        }
       ]
     },
     "keybindings": [
