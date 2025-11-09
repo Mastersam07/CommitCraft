@@ -5,23 +5,23 @@ import { GitService } from './gitService';
 let outputChannel: vscode.OutputChannel;
 
 export function activate(context: vscode.ExtensionContext) {
-    outputChannel = vscode.window.createOutputChannel('CommitCraft');
+    outputChannel = vscode.window.createOutputChannel('GitGenie');
 
-    console.log('CommitCraft is now active!');
-    outputChannel.appendLine('CommitCraft activated');
+    console.log('GitGenie is now active!');
+    outputChannel.appendLine('GitGenie activated');
 
     const gitService = new GitService();
     const generator = new CommitMessageGenerator(outputChannel);
 
     const generateCommand = vscode.commands.registerCommand(
-        'commitcraft.generateMessage',
+        'gitgenie.generateMessage',
         async () => {
             await generateCommitMessage(gitService, generator, false);
         }
     );
 
     const generateWithExplanationCommand = vscode.commands.registerCommand(
-        'commitcraft.generateWithExplanation',
+        'gitgenie.generateWithExplanation',
         async () => {
             await generateCommitMessage(gitService, generator, true);
         }
@@ -31,9 +31,9 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.StatusBarAlignment.Left,
         100
     );
-    statusBarItem.text = "$(sparkle) CommitCraft";
+    statusBarItem.text = "$(sparkle) GitGenie";
     statusBarItem.tooltip = "Generate commit message (Ctrl+Shift+G)";
-    statusBarItem.command = 'commitcraft.generateMessage';
+    statusBarItem.command = 'gitgenie.generateMessage';
     statusBarItem.show();
 
     context.subscriptions.push(
@@ -43,7 +43,7 @@ export function activate(context: vscode.ExtensionContext) {
         outputChannel
     );
 
-    const hasShownWelcome = context.globalState.get('commitcraft.welcomeShown');
+    const hasShownWelcome = context.globalState.get('gitgenie.welcomeShown');
     if (!hasShownWelcome) {
         showWelcomeMessage(context);
     }
@@ -55,7 +55,7 @@ async function generateCommitMessage(
     showExplanation: boolean
 ) {
     try {
-        const config = vscode.workspace.getConfiguration('commitcraft');
+        const config = vscode.workspace.getConfiguration('gitgenie');
         const apiKey = config.get<string>('geminiApiKey');
 
         if (!apiKey) {
@@ -65,7 +65,7 @@ async function generateCommitMessage(
                 'Get API Key'
             );
             if (result === 'Open Settings') {
-                vscode.commands.executeCommand('workbench.action.openSettings', 'commitcraft.geminiApiKey');
+                vscode.commands.executeCommand('workbench.action.openSettings', 'gitgenie.geminiApiKey');
             } else if (result === 'Get API Key') {
                 vscode.env.openExternal(vscode.Uri.parse('https://makersuite.google.com/app/apikey'));
             }
@@ -81,7 +81,7 @@ async function generateCommitMessage(
         await vscode.window.withProgress(
             {
                 location: vscode.ProgressLocation.Notification,
-                title: 'CommitCraft',
+                title: 'GitGenie',
                 cancellable: true
             },
             async (progress, token) => {
@@ -196,21 +196,21 @@ async function applyCommitMessage(message: string) {
 
 function showWelcomeMessage(context: vscode.ExtensionContext) {
     vscode.window.showInformationMessage(
-        'Welcome to CommitCraft! Generate your first AI-powered commit message with Ctrl+Shift+G',
+        'Welcome to GitGenie! Generate your first AI-powered commit message with Ctrl+Shift+G',
         'Open Settings',
         'Get API Key',
         'View Guide'
     ).then(selection => {
         if (selection === 'Open Settings') {
-            vscode.commands.executeCommand('workbench.action.openSettings', 'commitcraft');
+            vscode.commands.executeCommand('workbench.action.openSettings', 'gitgenie');
         } else if (selection === 'Get API Key') {
             vscode.env.openExternal(vscode.Uri.parse('https://makersuite.google.com/app/apikey'));
         } else if (selection === 'View Guide') {
-            vscode.env.openExternal(vscode.Uri.parse('https://github.com/mastersam07/commitcraft#readme'));
+            vscode.env.openExternal(vscode.Uri.parse('https://github.com/mastersam07/gitgenie#readme'));
         }
     });
 
-    context.globalState.update('commitcraft.welcomeShown', true);
+    context.globalState.update('gitgenie.welcomeShown', true);
 }
 
 export function deactivate() {

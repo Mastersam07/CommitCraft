@@ -1,10 +1,10 @@
-# CommitCraft - AI-Powered Commit Messages
+# GitGenie - AI-Powered Commit Messages
 
-[![Version](https://img.shields.io/visual-studio-marketplace/v/mastersam.commitcraft?style=flat-square&label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=mastersam.commitcraft)
-[![Installs](https://img.shields.io/visual-studio-marketplace/i/mastersam.commitcraft?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.commitcraft)
-[![Rating](https://img.shields.io/visual-studio-marketplace/r/mastersam.commitcraft?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.commitcraft)
-[![CI](https://img.shields.io/github/actions/workflow/status/mastersam07/commitcraft/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/mastersam07/commitcraft/actions)
-[![License](https://img.shields.io/github/license/mastersam07/commitcraft?style=flat-square)](LICENSE)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/mastersam.gitgenie?style=flat-square&label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=mastersam.gitgenie)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/mastersam.gitgenie?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.gitgenie)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/mastersam.gitgenie?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.gitgenie)
+[![CI](https://img.shields.io/github/actions/workflow/status/mastersam07/gitgenie/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/mastersam07/gitgenie/actions)
+[![License](https://img.shields.io/github/license/mastersam07/gitgenie?style=flat-square)](LICENSE)
 
 Generate meaningful commit messages that actually explain what your code does, powered by Google's Gemini AI.
 
@@ -18,7 +18,7 @@ Generate meaningful commit messages that actually explain what your code does, p
 - **📊 Confidence Scoring** - Know when to review carefully
 - **🎨 Context Aware** - Detects frameworks, languages, and patterns
 
-### What Makes CommitCraft Different
+### What Makes GitGenie Different
 - **Actually understands code changes** - Not just "Updated file.js"
 - **Learns from your commit style** - Analyzes your recent commits
 - **Educational** - Shows reasoning behind each suggestion
@@ -30,16 +30,16 @@ Generate meaningful commit messages that actually explain what your code does, p
 
 1. Open VS Code
 2. Press `Ctrl+Shift+X` (or `Cmd+Shift+X` on Mac) to open Extensions
-3. Search for "CommitCraft"
+3. Search for "GitGenie"
 4. Click Install
 
 Or install via command line:
 ```bash
-code --install-extension mastersam.commitcraft
+code --install-extension mastersam.gitgenie
 ```
 
 ### From VSIX (Manual Installation)
-1. Download the `.vsix` file from [releases](https://github.com/mastersam07/commitcraft/releases)
+1. Download the `.vsix` file from [releases](https://github.com/mastersam07/gitgenie/releases)
 2. In VS Code: `Extensions` → `...` → `Install from VSIX`
 3. Select the downloaded file
 
@@ -49,9 +49,9 @@ code --install-extension mastersam.commitcraft
    - Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
    - Create a new API key (it's free!)
    
-2. **Configure CommitCraft**
+2. **Configure GitGenie**
    - Open VS Code Settings (`Cmd/Ctrl + ,`)
-   - Search for "CommitCraft"
+   - Search for "GitGenie"
    - Paste your API key
 
 3. **Start Using**
@@ -74,7 +74,7 @@ code --install-extension mastersam.commitcraft
 ### With Explanation
 ```
 1. Open Command Palette (Ctrl+Shift+P)
-2. Run "CommitCraft: Generate with Explanation"
+2. Run "GitGenie: Generate with Explanation"
 3. See WHY each message was suggested
 4. Learn to write better commits
 ```
@@ -91,14 +91,14 @@ code --install-extension mastersam.commitcraft
 
 ## 🎯 Examples
 
-### Before CommitCraft
+### Before GitGenie
 ```
 - "Updated files"
 - "Fixed bug"  
 - "Changes"
 ```
 
-### After CommitCraft
+### After GitGenie
 ```
 - "fix: handle null response in payment validation"
 - "feat: add retry logic for failed Lightning Network payments"
@@ -142,9 +142,7 @@ Built with:
 
 ## 📮 Support
 
-- [Report Issues](https://github.com/mastersam07/commitcraft/issues)
-- [Feature Requests](https://github.com/mastersam07/commitcraft/discussions)
+- [Report Issues](https://github.com/mastersam07/gitgenie/issues)
+- [Feature Requests](https://github.com/mastersam07/gitgenie/discussions)
 
 ---
-
-**Made with ❤️ for developers who care about commit history**

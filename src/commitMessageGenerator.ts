@@ -32,7 +32,7 @@ export class CommitMessageGenerator {
         branchInfo: BranchInfo,
         apiKey: string
     ): Promise<GenerationResult> {
-        const config = vscode.workspace.getConfiguration('commitcraft');
+        const config = vscode.workspace.getConfiguration('gitgenie');
         const useConventional = config.get<boolean>('conventionalCommits', true);
         const includeEmoji = config.get<boolean>('includeEmoji', false);
         const modelName = config.get<string>('model', 'gemini-2.0-flash');

@@ -1,7 +1,7 @@
 {
-  "name": "commitcraft",
-  "displayName": "CommitCraft",
-  "description": "AI-powered commit messages that actually explain what you did",
+  "name": "gitgenie",
+  "displayName": "GitGenie",
+  "description": "Your AI-powered commit message genie - rub the lamp, get perfect commits!",
   "version": "0.0.1",
   "publisher": "mastersam",
   "author": {
@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mastersam07/commitcraft"
+    "url": "https://github.com/mastersam07/gitgenie"
   },
   "bugs": {
-    "url": "https://github.com/mastersam07/commitcraft/issues"
+    "url": "https://github.com/mastersam07/gitgenie/issues"
   },
-  "homepage": "https://github.com/mastersam07/commitcraft#readme",
+  "homepage": "https://github.com/mastersam07/gitgenie#readme",
   "license": "MIT",
   "categories": [
     "SCM Providers",
@@ -47,34 +47,34 @@
   "contributes": {
     "commands": [
       {
-        "command": "commitcraft.generateMessage",
+        "command": "gitgenie.generateMessage",
         "title": "Generate Commit Message",
-        "category": "CommitCraft"
+        "category": "GitGenie"
       },
       {
-        "command": "commitcraft.generateWithExplanation",
+        "command": "gitgenie.generateWithExplanation",
         "title": "Generate Commit Message with Explanation",
-        "category": "CommitCraft"
+        "category": "GitGenie"
       }
     ],
     "keybindings": [
       {
-        "command": "commitcraft.generateMessage",
+        "command": "gitgenie.generateMessage",
         "key": "ctrl+shift+g",
         "mac": "cmd+shift+g",
         "when": "scmProvider == git"
       }
     ],
     "configuration": {
-      "title": "CommitCraft",
+      "title": "GitGenie",
       "properties": {
-        "commitcraft.geminiApiKey": {
+        "gitgenie.geminiApiKey": {
           "type": "string",
           "default": "",
           "description": "Your Gemini API key",
           "order": 0
         },
-        "commitcraft.model": {
+        "gitgenie.model": {
           "type": "string",
           "enum": [
             "gemini-2.0-flash",
@@ -98,19 +98,19 @@
           "description": "Which Gemini model to use",
           "order": 1
         },
-        "commitcraft.conventionalCommits": {
+        "gitgenie.conventionalCommits": {
           "type": "boolean",
           "default": true,
           "description": "Use conventional commit format (feat:, fix:, etc.)",
           "order": 2
         },
-        "commitcraft.includeEmoji": {
+        "gitgenie.includeEmoji": {
           "type": "boolean",
           "default": false,
           "description": "Include emoji in commit messages (✨, 🐛, etc.)",
           "order": 3
         },
-        "commitcraft.messageStyle": {
+        "gitgenie.messageStyle": {
           "type": "string",
           "enum": [
             "brief",
