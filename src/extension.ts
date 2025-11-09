@@ -5,17 +5,14 @@ import { GitService } from './gitService';
 let outputChannel: vscode.OutputChannel;
 
 export function activate(context: vscode.ExtensionContext) {
-    // Create output channel for debugging
     outputChannel = vscode.window.createOutputChannel('CommitCraft');
 
     console.log('CommitCraft is now active!');
     outputChannel.appendLine('CommitCraft activated');
 
-    // Initialize services
     const gitService = new GitService();
     const generator = new CommitMessageGenerator(outputChannel);
 
-    // Register commands
     const generateCommand = vscode.commands.registerCommand(
         'commitcraft.generateMessage',
         async () => {
@@ -30,7 +27,6 @@ export function activate(context: vscode.ExtensionContext) {
         }
     );
 
-    // Add status bar item
     const statusBarItem = vscode.window.createStatusBarItem(
         vscode.StatusBarAlignment.Left,
         100
@@ -47,7 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
         outputChannel
     );
 
-    // Show welcome message on first install
     const hasShownWelcome = context.globalState.get('commitcraft.welcomeShown');
     if (!hasShownWelcome) {
         showWelcomeMessage(context);
@@ -60,7 +55,6 @@ async function generateCommitMessage(
     showExplanation: boolean
 ) {
     try {
-        // Check for API key
         const config = vscode.workspace.getConfiguration('commitcraft');
         const apiKey = config.get<string>('geminiApiKey');
 
@@ -78,14 +72,12 @@ async function generateCommitMessage(
             return;
         }
 
-        // Get workspace folder
         const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
         if (!workspaceFolder) {
             vscode.window.showErrorMessage('No workspace folder open');
             return;
         }
 
-        // Show progress
         await vscode.window.withProgress(
             {
                 location: vscode.ProgressLocation.Notification,
@@ -95,7 +87,6 @@ async function generateCommitMessage(
             async (progress, token) => {
                 progress.report({ increment: 20, message: 'Analyzing changes...' });
 
-                // Get git diff
                 const diff = await gitService.getStagedDiff(workspaceFolder.uri.fsPath);
 
                 if (!diff) {
@@ -107,7 +98,6 @@ async function generateCommitMessage(
                     return;
                 }
 
-                // Get context
                 progress.report({ increment: 20, message: 'Learning from commit history...' });
                 const recentCommits = await gitService.getRecentCommits(workspaceFolder.uri.fsPath, 10);
 
@@ -121,7 +111,6 @@ async function generateCommitMessage(
 
                 progress.report({ increment: 20, message: 'Generating commit message...' });
 
-                // Generate messages
                 const result = await generator.generateMessage(
                     diff,
                     recentCommits,
@@ -133,7 +122,6 @@ async function generateCommitMessage(
                 progress.report({ increment: 20, message: 'Done!' });
 
                 if (showExplanation) {
-                    // Show with explanation
                     const items = result.suggestions.map(s => ({
                         label: s.message,
                         description: `$(${getStyleIcon(s.style)}) ${s.style}`,
@@ -150,7 +138,6 @@ async function generateCommitMessage(
                         await applyCommitMessage(picked.suggestion.message);
                     }
                 } else {
-                    // Quick mode
                     const picked = await vscode.window.showQuickPick(
                         result.suggestions.map(s => ({
                             label: s.message,
@@ -219,7 +206,7 @@ function showWelcomeMessage(context: vscode.ExtensionContext) {
         } else if (selection === 'Get API Key') {
             vscode.env.openExternal(vscode.Uri.parse('https://makersuite.google.com/app/apikey'));
         } else if (selection === 'View Guide') {
-            vscode.env.openExternal(vscode.Uri.parse('https://github.com/yourusername/commitcraft#readme'));
+            vscode.env.openExternal(vscode.Uri.parse('https://github.com/mastersam07/commitcraft#readme'));
         }
     });
 

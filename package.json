@@ -3,6 +3,11 @@
   "displayName": "CommitCraft",
   "description": "AI-powered commit messages that actually explain what you did",
   "version": "0.0.1",
+  "publisher": "mastersam",
+  "author": {
+    "name": "Samuel Abada",
+    "url": "https://github.com/mastersam07"
+  },
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -10,13 +15,21 @@
     "type": "git",
     "url": "https://github.com/mastersam07/commitcraft"
   },
+  "bugs": {
+    "url": "https://github.com/mastersam07/commitcraft/issues"
+  },
+  "homepage": "https://github.com/mastersam07/commitcraft#readme",
   "license": "MIT",
   "categories": [
-    "Other",
+    "SCM Providers",
     "Machine Learning",
-    "Programming Languages",
-    "AI"
+    "Other"
   ],
+  "qna": "marketplace",
+  "galleryBanner": {
+    "color": "#1a1a1a",
+    "theme": "dark"
+  },
   "keywords": [
     "Git",
     "Commit",
@@ -128,7 +141,12 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "check-types": "tsc --noEmit",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags",
+    "vsce:package": "vsce package",
+    "vsce:publish": "vsce publish"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",

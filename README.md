@@ -1,4 +1,10 @@
-# CommitCraft - Gemini Powered Commit Messages
+# CommitCraft - AI-Powered Commit Messages
+
+[![Version](https://img.shields.io/visual-studio-marketplace/v/mastersam.commitcraft?style=flat-square&label=VS%20Code%20Marketplace)](https://marketplace.visualstudio.com/items?itemName=mastersam.commitcraft)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/mastersam.commitcraft?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.commitcraft)
+[![Rating](https://img.shields.io/visual-studio-marketplace/r/mastersam.commitcraft?style=flat-square)](https://marketplace.visualstudio.com/items?itemName=mastersam.commitcraft)
+[![CI](https://img.shields.io/github/actions/workflow/status/mastersam07/commitcraft/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/mastersam07/commitcraft/actions)
+[![License](https://img.shields.io/github/license/mastersam07/commitcraft?style=flat-square)](LICENSE)
 
 Generate meaningful commit messages that actually explain what your code does, powered by Google's Gemini AI.
 
@@ -20,15 +26,22 @@ Generate meaningful commit messages that actually explain what your code does, p
 
 ## 🚀 Installation
 
-### From VSIX (Current)
-1. Download the `.vsix` file from releases
+### From VS Code Marketplace (Recommended)
+
+1. Open VS Code
+2. Press `Ctrl+Shift+X` (or `Cmd+Shift+X` on Mac) to open Extensions
+3. Search for "CommitCraft"
+4. Click Install
+
+Or install via command line:
+```bash
+code --install-extension mastersam.commitcraft
+```
+
+### From VSIX (Manual Installation)
+1. Download the `.vsix` file from [releases](https://github.com/mastersam07/commitcraft/releases)
 2. In VS Code: `Extensions` → `...` → `Install from VSIX`
 3. Select the downloaded file
-
-### From Marketplace (Coming Soon)
-```
-ext install commitcraft
-```
 
 ## 🔧 Setup
 

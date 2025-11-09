@@ -27,14 +27,11 @@ export class GitService {
         const git = simpleGit.simpleGit(repoPath);
 
         try {
-            // Get staged diff
             const diff = await git.diff(['--cached']);
 
             if (!diff || diff.trim().length === 0) {
-                // If nothing staged, check if there are any changes at all
                 const status = await git.status();
                 if (status.modified.length > 0 || status.created.length > 0 || status.deleted.length > 0) {
-                    // Return unstaged diff as fallback (with a note)
                     const allDiff = await git.diff();
                     if (allDiff && allDiff.trim().length > 0) {
                         console.log('No staged changes, using all changes');
@@ -77,7 +74,6 @@ export class GitService {
         const git = simpleGit.simpleGit(repoPath);
 
         try {
-            // Get recent commit messages
             const log = await git.log({
                 maxCount: count,
                 format: {
@@ -97,19 +93,16 @@ export class GitService {
 
         try {
             const status = await git.status();
-            // Include all changed files
             const changedFiles = [
                 ...status.modified,
                 ...status.created,
                 ...status.staged,
                 ...status.renamed.map(r => r.to),
-            ].filter((v, i, a) => a.indexOf(v) === i); // Remove duplicates
+            ].filter((v, i, a) => a.indexOf(v) === i);
 
-            // Analyze file types
             const extensions = changedFiles.map(file => path.extname(file).toLowerCase());
             const uniqueExtensions = [...new Set(extensions)];
 
-            // Detect primary language
             const languageMap: Record<string, string> = {
                 '.ts': 'TypeScript',
                 '.tsx': 'TypeScript React',
@@ -144,7 +137,6 @@ export class GitService {
                 }
             }
 
-            // Detect frameworks based on files and patterns
             const frameworks: string[] = [];
 
             // Flutter/Dart
