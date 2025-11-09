@@ -19,7 +19,7 @@ Generate meaningful commit messages that actually explain what your code does, p
 ## ✨ Features
 
 ### Core Features
-- **✨ One-Click Generation** - Click the sparkle icon in Source Control for instant commit messages
+- **🪄 One-Click Generation** - Click the magic wand icon in Source Control for instant commit messages
 - **🤖 Smart Commit Messages** - Understands your code changes, not just file names
 - **📝 Multiple Styles** - Choose from brief, standard, or detailed messages
 - **🎯 Conventional Commits** - Automatically follows conventional commit format
@@ -65,7 +65,7 @@ code --install-extension mastersam.gitgenie
    - Paste your API key
 
 3. **Start Using** (3 ways to generate commit messages)
-   - **Click the ✨ icon** in the Source Control panel (next to commit message box)
+   - **Click the 🪄 magic wand icon** in the Source Control panel toolbar
    - **Keyboard shortcut**: Press `Ctrl+Shift+G` (Windows/Linux) or `Cmd+Shift+G` (Mac)
    - **Command Palette**: `Ctrl+Shift+P` → "GitGenie: Generate Commit Message"
 
@@ -78,7 +78,7 @@ code --install-extension mastersam.gitgenie
 1. Make your code changes
 2. Stage files (git add)
 3. Open Source Control panel (Ctrl+Shift+G on Windows/Linux, Cmd+Shift+G on Mac)
-4. Click the ✨ sparkle icon in the toolbar
+4. Click the 🪄 magic wand icon in the toolbar
 5. Pick from 3 AI-generated suggestions
 6. Message is applied to commit box
 ```

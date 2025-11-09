@@ -51,17 +51,24 @@
         "command": "gitgenie.generateMessage",
         "title": "Generate Commit Message",
         "category": "GitGenie",
-        "icon": "$(sparkle)"
+        "icon": "$(wand)"
       },
       {
         "command": "gitgenie.generateWithExplanation",
         "title": "Generate Commit Message with Explanation",
         "category": "GitGenie",
-        "icon": "$(info)"
+        "icon": "$(lightbulb)"
       }
     ],
     "menus": {
       "scm/title": [
+        {
+          "command": "gitgenie.generateMessage",
+          "group": "navigation",
+          "when": "scmProvider == git"
+        }
+      ],
+      "scm/inputBox": [
         {
           "command": "gitgenie.generateMessage",
           "group": "navigation",
